@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 const Header = ({heading}) => (<h1>{heading}</h1>);
 const Button = ({text, handleClick}) => (<button onClick={handleClick}>{text}</button>)
 const Statistics = ({good, neutral, bad, all, average, positive}) => {
+    if(good || neutral || bad){
     return(<>
     <p>Good: {good}</p>
     <p>Neutral: {neutral}</p>
@@ -11,7 +12,11 @@ const Statistics = ({good, neutral, bad, all, average, positive}) => {
     <p>All: {all}</p>
     <p>Average: {average}</p>
     <p>Positive: {positive}</p>
-    </>)
+    </>)}else{
+        return (
+            <p>No feedback given</p>
+        )
+    }
 }   
 
 const App = () => {
