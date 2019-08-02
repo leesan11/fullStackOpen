@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const Header = ({heading}) => (<h1>{heading}</h1>);
 const Button = ({text, handleClick}) => (<button onClick={handleClick}>{text}</button>)
-const Result = ({good, neutral, bad, all, average, positive}) => {
+const Statistics = ({good, neutral, bad, all, average, positive}) => {
     return(<>
     <p>Good: {good}</p>
     <p>Neutral: {neutral}</p>
@@ -25,7 +25,7 @@ const neutralClick = () => neutralSet(neutralCount+1)
 const badClick = () => badSet(badCount+1)
 let all = goodCount + badCount + neutralCount
 let average = (goodCount + (-1 * badCount))/all
-let positive = goodCount*100/all + "%"
+let positive = goodCount*100/all
 
     return(<>
 <Header heading={"give feedback"}/>
@@ -33,7 +33,7 @@ let positive = goodCount*100/all + "%"
 <Button text="Neutral" handleClick={neutralClick}/>
 <Button text="Bad" handleClick={badClick}/>
 <Header heading={"Statistics"}/>
-<Result good={goodCount} bad={badCount} neutral={neutralCount} all={all} average={! isNaN(average)?average:0} positive={! isNaN(positive)?positive:0}/>
+<Statistics good={goodCount} bad={badCount} neutral={neutralCount} all={all} average={! isNaN(average)?average:0} positive={! isNaN(positive)?positive+"%":0+"%"}/>
     </>)
 }
 
