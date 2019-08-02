@@ -3,17 +3,19 @@ import ReactDOM from 'react-dom';
 
 const Header = ({ heading }) => (<h1>{heading}</h1>);
 const Button = ({ text, handleClick }) => (<button onClick={handleClick}>{text}</button>)
-const Statistic = ({ text, stat }) => (<p>{text}: {stat}</p>)
+const Statistic = ({ text, stat }) => (<tr><td>{text}</td><td>{stat}</td></tr>)
 const Statistics = ({goodCount,neutralCount,badCount,all,average,positive}) => {
     if(goodCount ||badCount ||neutralCount){
-    return (<>
-    <Statistic text={"good"} stat={goodCount} />
+    return (<table>
+        <tbody>
+        <Statistic text={"good"} stat={goodCount} />
         <Statistic text={"neutral"} stat={neutralCount} />
         <Statistic text={"bad"} stat={badCount} />
         <Statistic text={"all"} stat={all} />
         <Statistic text={"average"} stat={!isNaN(average) ? average : 0} />
         <Statistic text={"positive"} stat={!isNaN(positive) ? positive : 0} />
-        </>)
+        </tbody>
+        </table>)
     }else{
         return <p>No feedback given</p>
     }
