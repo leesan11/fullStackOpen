@@ -4,9 +4,8 @@ import Total from './components/Total'
 
 const Content = ({parts}) =>{
     const getParts = () => {
-        let total = 0
+        let total = parts.reduce((sum,part)=>sum + part.exercises,0)
         let result = parts.map(part => {
-            total += part.exercises
             return <Part key={part.id} name={part.name} exercises={part.exercises}/>
             })
         result.push(<Total key={parts.length+1} total={total}/>)
