@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom'
 const Button = ({ handleClick, text }) => (<button onClick={handleClick}>{text}</button>)
 const Header = ({ text }) => (<h1>{text}</h1>)
 const MostVotes = ({ anecdote, votes }) => {
-    return(
-    <>
-        <p>{anecdote}</p>
-        <p>has {votes} votes</p>
-    </>
+    return (
+        <>
+            <p>{anecdote}</p>
+            <p>has {votes} votes</p>
+        </>
     )
 }
 
@@ -16,9 +16,8 @@ const App = ({ anecdotes }) => {
     const [selected, setSelected] = useState(0)
     const [votes, setVote] = useState(Array(anecdotes.length).fill(0))
     const [mostVotedIndex, setMostVotedIndex] = useState(0)
-    const showAnecdote = () => {
-        setSelected(Math.floor(Math.random() * anecdotes.length))
-    }
+    const showAnecdote = () => setSelected(Math.floor(Math.random() * anecdotes.length))
+    
     const addVote = () => {
         let copy = [...votes]
         copy[selected]++
@@ -27,22 +26,20 @@ const App = ({ anecdotes }) => {
     }
     const getMostVoted = (votes) => {
         let largest = Math.max(...votes)
-        console.log(largest)
         let index = votes.indexOf(largest)
         setMostVotedIndex(index);
-        
     }
 
     return (<>
-        <Header text={"Anecdote of the Day"}/>
+        <Header text={"Anecdote of the Day"} />
         <div>
             <p>{anecdotes[selected]}</p>
             <p>has {votes[selected]} votes</p>
         </div>
         <Button handleClick={showAnecdote} text={"show anecdote"} />
         <Button handleClick={addVote} text={"vote"} />
-        <Header text={"Anecdote with Most Votes"}/>
-        <MostVotes anecdote={anecdotes[mostVotedIndex]} votes={votes[mostVotedIndex]}/>
+        <Header text={"Anecdote with Most Votes"} />
+        <MostVotes anecdote={anecdotes[mostVotedIndex]} votes={votes[mostVotedIndex]} />
     </>)
 }
 
