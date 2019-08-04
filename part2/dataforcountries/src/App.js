@@ -7,21 +7,40 @@ function App() {
   const [ newSearch, setNewSearch ] = useState('')
   const [ newResult, setNewResult ] = useState([])
   const [ newShow, setNewShow ] = useState([])
-
+  
   useEffect(()=>{
-    axios.get("https://restcountries.eu/rest/v2/all")
-      .then((response)=>{
+    async function fetchData(){
+        let response = await axios.get("https://restcountries.eu/rest/v2/all")
         let countries = response.data
         let result = countries.filter((country)=>{
           return ((country.name).toLowerCase()).indexOf(newSearch) !==-1
         })
         if(result.length < 10){
-          setNewResult(result)
-        }else{
-          setNewResult([])
+          async function fetchWeather(){
+            return Promise.all(result.map(async (country)=>{
+            let response = await axios.get(`https://api.apixu.com/v1/current.json?key=a16309679682437b82612341190408&q=${country.name}`)
+            let weather = response.data
+            return {
+              name:country.name,
+              capital:country.capital,
+              population:country.population,
+              languages:country.languages,
+              flag:country.flag,
+              image:weather.current.condition.icon,
+              temp:weather.current.temp_c,
+              wind:weather.current.wind_kph,
+              direction:weather.current.wind_dir
+            }
+          }))
         }
-      })
+          setNewResult(await fetchWeather())
+        }else{
+          await setNewResult([])
+        } 
+      }
+      fetchData()
   },[newSearch])
+
 
   const handleShow = (result) => {
     if (newShow.indexOf(result) === -1){
@@ -47,7 +66,10 @@ function App() {
         <h6>Languages Spoken</h6>
         {(country[0].languages.map(lang=><li key={lang.name}>{lang.name}</li>))}
         <img src={country[0].flag} alt="flag"/>
-      </div>
+        <p>{country[0].temp} degrees Celsius</p>
+        <img src={country[0].image} alt="weather"/>
+        <p>{country[0].wind} kph {country[0].direction} direction</p>
+        </div>
     )
     }else{
       return []
@@ -57,7 +79,9 @@ function App() {
   const renderResult = () =>{
     let countryList = "Too many matches or no matches, specify another filter"
     if (newResult.length > 0){
+      console.log(newResult)
       countryList = newResult.map((result)=>{
+        
       return(<div key={result.name}>
         {result.name}<button key={`${result.name}-b`} onClick={()=>handleShow(result)}>show</button>
         <div data-show={result.name}>
