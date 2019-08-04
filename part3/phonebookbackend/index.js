@@ -23,16 +23,22 @@ app.delete("/api/persons/:id", (request, response)=>{
 })
 
 app.post("/api/persons", (request,response) => {
+    let toAddObj = request.body
     let db = JSON.parse(fs.readFileSync('./db.json').toString());
-    let id = Math.floor((Math.random()*1000) + 4)
-    let newPerson = {...(request.body), 
-                id:id}
-    let result = [...db.persons, newPerson]   
-    fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
-        response.json(newPerson)
-    });
-
-
+    
+    if (!toAddObj.name || !toAddObj.number){
+        response.status(404).json({"error":"must supply name and number"})
+    }else if( ((db.persons).find(person=>person.name == toAddObj.name)) ){
+        response.status(404).json({"error":"name must be unique"})
+    }else{
+        let id = Math.floor((Math.random()*1000) + 4)
+        let newPerson = {...(toAddObj), 
+                    id:id}
+        let result = [...db.persons, newPerson]   
+        fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
+            response.json(newPerson)
+        });
+    }
 })
 
 app.get("/api/persons", (request, response) =>{
