@@ -21,7 +21,7 @@ const App = () => {
     NumberService.getAll().then((allNumbers)=>{
       setPersons(allNumbers)
     })
-  },[])
+  },[persons])
 
   return (
     <div>
@@ -31,7 +31,7 @@ const App = () => {
         <PersonForm persons={persons} newName={newName} newNumber={newNumber} setPersons={setPersons} 
           setNewName={setNewName} setNumber={setNumber}/>
       <h2>Numbers</h2>
-        <Persons persons={persons} newSearch={newSearch}/>
+        <Persons persons={persons} newSearch={newSearch} setPersons={setPersons}/>
     </div>
   )
 }

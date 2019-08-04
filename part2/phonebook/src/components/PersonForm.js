@@ -7,12 +7,10 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
         event.preventDefault();
 
         if(persons.map(person=>person.name).indexOf(newName) === -1){
-          setPersons([...persons,{
-            name:newName,
-            number:newNumber
-          }])
+          
           NumberService.addNumber({name:newName,number:newNumber}).then(response=>{
-            console.log("added")
+            console.log(response)
+            setPersons([...persons,response])
           })
         }else{
           alert(`${newName} is already added to the phonebook`)
