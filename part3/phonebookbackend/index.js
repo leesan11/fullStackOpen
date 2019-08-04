@@ -8,6 +8,10 @@ app.get("/api/persons", (request, response) => {
     response.json(phonebook)
 })
 
-app.listen(3001,()=>{
+app.get("/info", (request, response) => {
+    response.send(`Phonebook has info for ${phonebook.persons.length} people.<br>${new Date()}`)
+})
+
+app.listen(3001, () => {
     console.log("listening to 3001")
 })
