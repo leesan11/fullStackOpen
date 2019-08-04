@@ -1,4 +1,5 @@
 import React from 'react';
+import NumberService from '../services/Numbers'
 
 const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNumber}) => {
 
@@ -10,6 +11,9 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
             name:newName,
             number:newNumber
           }])
+          NumberService.addNumber({name:newName,number:newNumber}).then(response=>{
+            console.log("added")
+          })
         }else{
           alert(`${newName} is already added to the phonebook`)
         }    

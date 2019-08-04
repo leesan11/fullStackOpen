@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import axios from 'axios'
+import NumberService from './services/Numbers'
+
+
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -16,13 +18,10 @@ const App = () => {
   const [ newSearch, setSearch ] = useState('')
 
   useEffect( ()=>{
-    axios.get("http://localhost:3001/Persons")
-    .then((response)=>{
-      console.log(response.data)
-      setPersons(response.data)
+    NumberService.getAll().then((allNumbers)=>{
+      setPersons(allNumbers)
     })
   },[])
-
 
   return (
     <div>
