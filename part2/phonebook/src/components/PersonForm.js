@@ -13,7 +13,16 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
             setPersons([...persons,response])
           })
         }else{
-          alert(`${newName} is already added to the phonebook`)
+          let putConfirm = window.confirm(`${newName} is already added to the phonebook, replace the old number with new one?`)
+          if (putConfirm){
+            let id = '';
+            persons.forEach(person => {id = person.name == newName ? person.id:id});
+            console.log(id, newName, newNumber)
+            NumberService.putNumber(id, {id:id, name:newName, number:newNumber}).then(response=>{
+              console.log(response)
+              setPersons([...persons.filter(person=>person.id!==id), {...response,name:newName,number:newNumber}])
+            })
+          }
         }    
       }
     
