@@ -6,6 +6,7 @@ function App() {
 
   const [ newSearch, setNewSearch ] = useState('')
   const [ newResult, setNewResult ] = useState([])
+  const [ newShow, setNewShow ] = useState([])
 
   useEffect(()=>{
     axios.get("https://restcountries.eu/rest/v2/all")
@@ -22,31 +23,48 @@ function App() {
       })
   },[newSearch])
 
-  const renderResult = () =>{
-    let countryList = "Too many matches or no matches, specify another filter"
-    if (newResult.length > 1){
-      countryList = newResult.map((result)=>{
-      return(<li key={result.name}>{result.name}</li>)
+  const handleShow = (result) => {
+    if (newShow.indexOf(result) === -1){
+    setNewShow([...newShow, result])
+  }else{
+    let filtered = newShow.filter(show=>{
+      return show !== result
     })
-  }else if ( newResult.length === 1 ){
-    let tempObj = {
-      name:newResult[0].name,
-      flag:newResult[0].flag,
-      capital:newResult[0].capital,
-      languages:(newResult[0].languages.map(lang=><li key={lang.name}>{lang.name}</li>)),
-      population:newResult[0].population
-    }
-    countryList = (
+    setNewShow(filtered)
+  }
+  }
+
+  const showData = (name) => {
+    let country = newShow.filter(show=>{
+      return show.name === name
+    })
+    if(country.length === 1){
+    return (
       <div>
-        <h3>{tempObj.name}</h3>
-        <p>Capital: {tempObj.capital}</p>
-        <p>Population: {tempObj.population}</p>
+        <h3>{country[0].name}</h3>
+        <p>Capital: {country[0].capital}</p>
+        <p>Population: {country[0].population}</p>
         <h6>Languages Spoken</h6>
-        {tempObj.languages}
-        <img src={tempObj.flag} alt="flag"/>
+        {(country[0].languages.map(lang=><li key={lang.name}>{lang.name}</li>))}
+        <img src={country[0].flag} alt="flag"/>
       </div>
     )
-    
+    }else{
+      return []
+    }
+  }
+
+  const renderResult = () =>{
+    let countryList = "Too many matches or no matches, specify another filter"
+    if (newResult.length > 0){
+      countryList = newResult.map((result)=>{
+      return(<div key={result.name}>
+        {result.name}<button key={`${result.name}-b`} onClick={()=>handleShow(result)}>show</button>
+        <div data-show={result.name}>
+          {showData(result.name)}
+        </div>
+        </div>)
+    })
   }
     return countryList
   }
