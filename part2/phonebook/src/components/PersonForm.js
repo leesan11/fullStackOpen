@@ -19,9 +19,14 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
             let id = '';
             persons.forEach(person => {id = person.name === newName ? person.id:id});
             
-            NumberService.putNumber(id, {id:id, name:newName, number:newNumber}).then(response=>{
+            NumberService.putNumber(id, {id:id, name:newName, number:newNumber})
+            .then(response=>{
               setPersons([...persons.filter(person=>person.id!==id), {...response,name:newName,number:newNumber}])
               setMessage(`Changed number of ${newName}`)
+              setTimeout(()=>setMessage(''),5000)
+            })
+            .catch(error=>{
+              setMessage(`Information of ${newName} has already been removed from the server`)
               setTimeout(()=>setMessage(''),5000)
             })
           }
