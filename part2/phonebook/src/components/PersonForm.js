@@ -1,7 +1,7 @@
 import React from 'react';
 import NumberService from '../services/Numbers'
 
-const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNumber}) => {
+const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNumber, setMessage}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -9,18 +9,20 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
         if(persons.map(person=>person.name).indexOf(newName) === -1){
           
           NumberService.addNumber({name:newName,number:newNumber}).then(response=>{
-            console.log(response)
             setPersons([...persons,response])
+            setMessage(`Added ${newName}`)
+            setTimeout(()=>setMessage(''),5000)
           })
         }else{
           let putConfirm = window.confirm(`${newName} is already added to the phonebook, replace the old number with new one?`)
           if (putConfirm){
             let id = '';
-            persons.forEach(person => {id = person.name == newName ? person.id:id});
-            console.log(id, newName, newNumber)
+            persons.forEach(person => {id = person.name === newName ? person.id:id});
+            
             NumberService.putNumber(id, {id:id, name:newName, number:newNumber}).then(response=>{
-              console.log(response)
               setPersons([...persons.filter(person=>person.id!==id), {...response,name:newName,number:newNumber}])
+              setMessage(`Changed number of ${newName}`)
+              setTimeout(()=>setMessage(''),5000)
             })
           }
         }    

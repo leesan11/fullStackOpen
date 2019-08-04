@@ -6,9 +6,9 @@
       "id": 1
     },
     {
+      "id": 2,
       "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
+      "number": "123"
     },
     {
       "name": "Dan Abramov",
@@ -19,11 +19,6 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "id": 5,
-      "name": "asd",
-      "number": "345"
     }
   ]
 }

@@ -3,6 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import NumberService from './services/Numbers'
+import Message from './components/Message'
 
 
 
@@ -16,6 +17,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
   const [ newSearch, setSearch ] = useState('')
+  const [ newMessage, setMessage ] = useState('')
 
   useEffect( ()=>{
     NumberService.getAll().then((allNumbers)=>{
@@ -25,11 +27,12 @@ const App = () => {
 
   return (
     <div>
+      {newMessage?<Message newMessage={newMessage} />:null}
       <h2>Phonebook</h2>
         <Filter setSearch={setSearch}/>
       <h2>Add a new</h2>
         <PersonForm persons={persons} newName={newName} newNumber={newNumber} setPersons={setPersons} 
-          setNewName={setNewName} setNumber={setNumber}/>
+          setNewName={setNewName} setNumber={setNumber} setMessage={setMessage}/>
       <h2>Numbers</h2>
         <Persons persons={persons} newSearch={newSearch} setPersons={setPersons}/>
     </div>
