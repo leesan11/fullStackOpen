@@ -17,9 +17,22 @@ app.get("/api/persons/:id", (request, response) => {
 app.delete("/api/persons/:id", (request, response)=>{
     let db = JSON.parse(fs.readFileSync('./db.json').toString());
     let result = (db.persons).filter(person => person.id != request.params.id)    
-    fs.writeFile('./db.json', JSON.stringify(result),()=>{
+    fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
         response.status(204).json({"data":"deleted"})
     });  
+})
+
+app.post("/api/persons", (request,response) => {
+    let db = JSON.parse(fs.readFileSync('./db.json').toString());
+    let id = Math.floor((Math.random()*1000) + 4)
+    let newPerson = {...(request.body), 
+                id:id}
+    let result = [...db.persons, newPerson]   
+    fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
+        response.json(newPerson)
+    });
+
+
 })
 
 app.get("/api/persons", (request, response) =>{
