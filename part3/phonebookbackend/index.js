@@ -27,12 +27,22 @@ app.use(morgan(function (tokens, req, res) {
 
 
 app.get("/api/persons/:id", (request, response) => {
-    let result = (phonebook.persons).find(person => person.id == request.params.id)
-    if (result) {
-        response.json(result)
-    } else {
-        response.status(404).end()
-    }
+    // let result = (phonebook.persons).find(person => person.id == request.params.id)
+    // if (result) {
+    //     response.json(result)
+    // } else {
+    //     response.status(404).end()
+    // }
+    Person.findById(request.params.id)
+    .then(result=>{
+        if(result){
+            response.json(result.toJSON())
+        }else{
+            response.status(404).end()
+        }
+    })
+    .catch(error=>next(error))
+
 })
 
 app.delete("/api/persons/:id", (request, response) => {
@@ -92,7 +102,11 @@ app.get("/api/persons", (request, response) => {
 })
 
 app.get("/info", (request, response) => {
-    response.send(`Phonebook has info for ${phonebook.persons.length} people.<br>${new Date()}`)
+    Person.find({})
+    .then(result=>{
+        response.send(`Phonebook has info for ${result.length} people.<br>${new Date()}`)
+    })
+    .catch(error=>next(error))
 })
 
 const unknownEndpoint = (request, response) => {
