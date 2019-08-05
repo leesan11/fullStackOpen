@@ -14,24 +14,25 @@ let url = `mongodb+srv://leesan11:${password}@cluster0-imp84.mongodb.net/phonebo
 
 mongoose.connect(url, { useNewUrlParser: true })
 
-const phoneSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
   name: String,
   number: Number
 })
 
-const Phone = mongoose.model('Phone', phoneSchema)
+const Person = mongoose.model('Phone', personSchema)
+
 if (name && number){
-const phone = new Phone({
+const person = new Phone({
   name,
   number
 })
 
-phone.save().then(response => {
+person.save().then(response => {
   console.log(`added ${response.name} ${response.number} to phonebook`)
   mongoose.connection.close()
 })
 }else{
-  Phone.find({}).then(result=>{
+  Person.find({}).then(result=>{
     console.log("Phonebook")
     result.forEach(obj => {
       console.log(`${obj.name} ${obj.number}`)
