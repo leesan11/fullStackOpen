@@ -23,6 +23,9 @@ app.use(morgan(function (tokens, req, res) {
     ].join(' ')
 }))
 
+
+
+
 app.get("/api/persons/:id", (request, response) => {
     let result = (phonebook.persons).find(person => person.id == request.params.id)
     if (result) {
@@ -39,12 +42,19 @@ app.delete("/api/persons/:id", (request, response) => {
     // response.status(204).json({ "data": "deleted" })
     // fs.writeFile(`${__dirname}/db.json`, JSON.stringify({persons:result}),()=>{
     //     response.status(204).json({"data":"deleted"})
-    // });  
+    // });
+    Person.findById(request.params.id)
+    .then(result=>{
+        if(!result){
+            response.status(404).end()
+        }
+    })
+    
     Person.findByIdAndRemove(request.params.id)
     .then(result=>{
         response.status(204).end()
     })
-    .catch(error=>console.log(error))
+    .catch(error=>next(error))
 })
 
 app.post("/api/persons", (request, response) => {
@@ -77,6 +87,23 @@ app.get("/info", (request, response) => {
     response.send(`Phonebook has info for ${phonebook.persons.length} people.<br>${new Date()}`)
 })
 
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+  }
+  
+  // handler of requests with unknown endpoint
+  app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+  
+    if (error.name === 'CastError' && error.kind == 'ObjectId') {
+      return response.status(400).send({ error: 'malformatted id' })
+    } 
+  
+    next(error)
+  }
+  app.use(errorHandler)
 
 
 app.listen(PORT, () => {
