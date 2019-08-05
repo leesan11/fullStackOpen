@@ -12,6 +12,11 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
             setMessage(`Added ${newName}`)
             setTimeout(()=>setMessage(''),2000)
           })
+          .catch(error=>{
+            
+            setMessage(`${error.response.data.error}`)
+            setTimeout(()=>setMessage(''),2000)
+          })
         }else{
           let putConfirm = window.confirm(`${newName} is already added to the phonebook, replace the old number with new one?`)
           if (putConfirm){

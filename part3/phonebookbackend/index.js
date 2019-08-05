@@ -89,7 +89,9 @@ app.post("/api/persons", (request, response, next) => {
         newPerson.save().then(result => {
             response.json(result.toJSON())
         })
-        .catch(error=>next(error))
+        .catch(error=>{
+            next(error)
+        })
         // fs.writeFile(`${__dirname}/db.json`, JSON.stringify({persons:result}),()=>{
         //     response.json(newPerson)
         // });
