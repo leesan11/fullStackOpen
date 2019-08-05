@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
+const Person = require('./models/mongo')
 const app = express();
 // const phonebook = require('./db.json');
-const fs = require('fs');
+// const fs = require('fs');
 const morgan = require('morgan');
 const cors = require('cors')
 const PORT = process.env.PORT || 3001
@@ -96,7 +98,9 @@ app.post("/api/persons", (request,response) => {
 })
 
 app.get("/api/persons", (request, response) =>{
-    response.json(phonebook)
+    Person.find({}).then(result=>{
+        response.json({persons:result.map(num=>num.toJSON())})
+    })
 })
 
 app.get("/info", (request, response) => {
