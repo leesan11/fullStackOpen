@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+mongoose.set('findByIdAndRemove', false)
+mongoose.set('useFindAndModify', false)
 
 let url = process.env.MONGODB_URI
 

@@ -34,12 +34,17 @@ app.get("/api/persons/:id", (request, response) => {
 
 app.delete("/api/persons/:id", (request, response) => {
     // let db = JSON.parse(fs.readFileSync(`${__dirname}/db.json`).toString());
-    let result = (phonebook.persons).filter(person => person.id != request.params.id)
-    phonebook.persons = result
-    response.status(204).json({ "data": "deleted" })
+    // let result = (phonebook.persons).filter(person => person.id != request.params.id)
+    // phonebook.persons = result
+    // response.status(204).json({ "data": "deleted" })
     // fs.writeFile(`${__dirname}/db.json`, JSON.stringify({persons:result}),()=>{
     //     response.status(204).json({"data":"deleted"})
     // });  
+    Person.findByIdAndRemove(request.params.id)
+    .then(result=>{
+        response.status(204).end()
+    })
+    .catch(error=>console.log(error))
 })
 
 app.post("/api/persons", (request, response) => {
