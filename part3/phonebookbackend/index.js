@@ -57,6 +57,14 @@ app.delete("/api/persons/:id", (request, response) => {
     .catch(error=>next(error))
 })
 
+app.put("/api/persons/:id", (request,response)=>{
+    Person.findByIdAndUpdate(request.params.id, request.body, { new: true })
+    .then(result=>{
+        response.json(result.toJSON())
+    })
+    .catch(error=>next(error))
+})
+
 app.post("/api/persons", (request, response) => {
     let toAddObj = request.body
     // let db = JSON.parse(fs.readFileSync(`${__dirname}/db.json`).toString());
