@@ -4,6 +4,9 @@ const app = express();
 const phonebook = require('./db.json');
 const fs = require('fs');
 const morgan = require('morgan');
+const cors = require('cors')
+const PORT = process.env.PORT || 3001
+app.use(cors())
 app.use(bodyParser.json());
 app.use(express.static('./build'))
 morgan.token('post', function (req, res) { return JSON.stringify(req.body) })
@@ -64,6 +67,6 @@ app.get("/info", (request, response) => {
 
 
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log("listening to 3001")
 })
