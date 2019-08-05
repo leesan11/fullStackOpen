@@ -8,7 +8,7 @@ const cors = require('cors')
 const PORT = process.env.PORT || 3001
 app.use(cors())
 app.use(bodyParser.json());
-app.use(express.static('./build'))
+app.use(express.static('build'))
 morgan.token('post', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(function (tokens, req, res) {
     return [

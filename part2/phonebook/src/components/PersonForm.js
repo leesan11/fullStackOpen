@@ -5,13 +5,12 @@ const PersonForm = ({persons, newName, newNumber, setPersons, setNewName, setNum
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         if(persons.map(person=>person.name).indexOf(newName) === -1){
           
           NumberService.addNumber({name:newName,number:newNumber}).then(response=>{
             setPersons([...persons,response])
             setMessage(`Added ${newName}`)
-            setTimeout(()=>setMessage(''),5000)
+            setTimeout(()=>setMessage(''),2000)
           })
         }else{
           let putConfirm = window.confirm(`${newName} is already added to the phonebook, replace the old number with new one?`)
