@@ -31,16 +31,16 @@ app.get("/api/persons/:id", (request, response) => {
 })
 
 app.delete("/api/persons/:id", (request, response)=>{
-    let db = JSON.parse(fs.readFileSync('./db.json').toString());
+    let db = JSON.parse(fs.readFileSync(`${__dirname}/db.json`).toString());
     let result = (db.persons).filter(person => person.id != request.params.id)    
-    fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
+    fs.writeFile(`${__dirname}/db.json`, JSON.stringify({persons:result}),()=>{
         response.status(204).json({"data":"deleted"})
     });  
 })
 
 app.post("/api/persons", (request,response) => {
     let toAddObj = request.body
-    let db = JSON.parse(fs.readFileSync('./db.json').toString());
+    let db = JSON.parse(fs.readFileSync(`${__dirname}/db.json`).toString());
     
     if (!toAddObj.name || !toAddObj.number){
         response.status(404).json({"error":"must supply name and number"})
@@ -51,7 +51,7 @@ app.post("/api/persons", (request,response) => {
         let newPerson = {...(toAddObj), 
                     id:id}
         let result = [...db.persons, newPerson]   
-        fs.writeFile('./db.json', JSON.stringify({persons:result}),()=>{
+        fs.writeFile(`${__dirname}/db.json`, JSON.stringify({persons:result}),()=>{
             response.json(newPerson)
         });
     }
