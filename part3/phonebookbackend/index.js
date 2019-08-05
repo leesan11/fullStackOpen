@@ -5,6 +5,7 @@ const phonebook = require('./db.json');
 const fs = require('fs');
 const morgan = require('morgan');
 app.use(bodyParser.json());
+app.use(express.static('./build'))
 morgan.token('post', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(function (tokens, req, res) {
     return [
