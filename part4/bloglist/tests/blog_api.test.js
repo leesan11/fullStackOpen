@@ -30,6 +30,22 @@ test("check for id property", async () => {
     })
 })
 
+test("check likes property missing", async () => {
+    const newBlog = {
+        title:"tested and true",
+        author:"John Smith",
+        url:"www.google.ca"
+    }
+    await api
+    .post("/api/blogs")
+    .send(newBlog).expect(200)
+    .expect('Content-Type', /application\/json/)
+
+    const blogs = await helper.blogsInDb()
+    expect(blogs.length).toBe(helper.initialBlogs.length +1)
+    expect(blogs.find(blog=>blog.title===newBlog.title).likes).toBe(0)
+})
+
 test("obtain blog by id", async () => {
     const blogs = await helper.blogsInDb()
     const id = blogs[0].id

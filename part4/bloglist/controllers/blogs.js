@@ -9,9 +9,13 @@ blogsRouter.get("/",async (request, response) => {
 })
 
 blogsRouter.post("/", async (request, response, next) => {
-
+    let temp = request.body
+    if(!temp.likes){
+        temp = {...temp, likes:0}
+        console.log(temp)
+    }
     try{
-        const newBlog = new Blog(request.body)
+        const newBlog = new Blog(temp)
         const savedBlog = await newBlog.save()
         response.json(savedBlog.toJSON())
     }catch(exception){
