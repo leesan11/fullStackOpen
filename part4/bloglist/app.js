@@ -1,6 +1,7 @@
 const config = require('./utils/config')
 const express = require('express')
 const blogsRouter = require('./controllers/blogs')
+const logger = require('./utils/logger')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
@@ -10,10 +11,10 @@ app.use(bodyParser.json())
 app.use(cors())
 mongoose.connect(config.MONGODB_URI,{ useNewUrlParser: true })
 .then(()=>{
-    console.log("connected to mongo")
+    logger.info("connected to mongo")
 })
 .catch((error)=>{
-    console.log(`mongo error ${error.message}`)
+    logger.error(`mongo error ${error.message}`)
 })
 
 app.use(requestLogger)
