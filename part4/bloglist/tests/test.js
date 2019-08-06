@@ -59,9 +59,16 @@ test('dummy returns one', () => {
 
 describe('total likes', () => {
     
-    test('when list has only one blog equals the likes of that', () => {
+    test('find total of all likes', () => {
       const result = listHelper.totalLikes(blogs)
       expect(result).toBe(36)
     })
+  })
+
+  describe('most likes', () => {
+      test('find the most liked blog', () => {
+          const result = listHelper.favoriteBlog(blogs)
+          expect(result).toEqual(blogs[2])
+      })
   })
 
