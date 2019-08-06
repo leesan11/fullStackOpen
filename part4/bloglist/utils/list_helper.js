@@ -19,4 +19,19 @@ const mostBlogs = blogs => {
 
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
+const mostLikes = blogs => {
+    return blogs.reduce((allBlogs, current) => {
+        if (allBlogs.find(ele => ele.author === current.author)) {
+            return allBlogs.map(ele => (ele.author === current.author) ? { author: current.author, likes: current.likes + ele.likes } : ele)
+        } else {
+            return [...allBlogs, {
+                author: current.author,
+                likes: current.likes
+            }]
+        }
+    }, [])
+        .reduce((mostBlogs, current) => current.likes > mostBlogs.likes ? current : mostBlogs, { author: "null", likes: 0 })
+
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }
