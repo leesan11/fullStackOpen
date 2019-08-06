@@ -1,20 +1,20 @@
 require('dotenv').config()
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require('express')
+const bodyParser = require('body-parser')
 const Person = require('./models/mongo')
-const app = express();
+const app = express()
 // const phonebook = require('./db.json');
 // const fs = require('fs');
-const morgan = require('morgan');
+const morgan = require('morgan')
 const cors = require('cors')
 const PORT = process.env.PORT || 3001
 app.use(cors())
 app.use(bodyParser.json());
 app.use(express.static('build'))
-morgan.token('post', function (req, res) { return JSON.stringify(req.body) })
+morgan.token('post', function (req) { return JSON.stringify(req.body) })
 app.use(morgan(function (tokens, req, res) {
     return [
-        tokens.method(req, res),
+    tokens.method(req, res),
         tokens.url(req, res),
         tokens.status(req, res),
         tokens.res(req, res, 'content-length'), '-',
