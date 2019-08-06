@@ -1,5 +1,5 @@
-const dummy = blogs => {
-    return 1
-}
+const dummy = blogs => 1
 
-module.exports={dummy}
+const totalLikes = blogs => blogs.reduce((sum,current)=>sum + current.likes,0)
+    
+module.exports={dummy, totalLikes}
