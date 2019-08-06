@@ -23,9 +23,14 @@ test("there are 2 blogs", async () => {
     expect(response.body.length).toBe(helper.initialBlogs.length)
 })
 
+test("check for id property", async () => {
+    const blogs = await helper.blogsInDb()
+    blogs.forEach(blog=>{
+        expect(blog.id).toBeDefined()
+    })
+})
+
 test("obtain blog by id", async () => {
-    // get id
-    // const tdb = await Blog.find({})
     const blogs = await helper.blogsInDb()
     const id = blogs[0].id
     const response = await api.get(`/api/blogs/${id}`)
