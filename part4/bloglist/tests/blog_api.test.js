@@ -30,6 +30,18 @@ test("check for id property", async () => {
     })
 })
 
+test("bad request on post", async () => {
+    const newBlog = {
+        author:"John Smith",
+        likes:7
+    }
+    await api
+    .post("/api/blogs")
+    .send(newBlog).expect(400)
+    .expect('Content-Type', /application\/json/)
+
+})
+
 test("check likes property missing", async () => {
     const newBlog = {
         title:"tested and true",
