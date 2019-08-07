@@ -3,6 +3,11 @@ const User = require('../models/users')
 const bcrypt = require('bcrypt')
 
 usersRouter.post("/", async (request,response,next)=>{
+    // passsword is too short
+    if(request.body.password.length <=3){
+        response.status(400).json("password is too short")
+    }
+
     try{
         const body = request.body
         const saltRounds = 10

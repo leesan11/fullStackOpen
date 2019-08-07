@@ -144,7 +144,29 @@ describe("for users model", () => {
 
     })
 
+    test("no username", async () => {
+        const newUser = {
+            username: "",
+            name: "test2",
+            password: "test2"
+        }
 
+        await api.post("/api/users")
+            .send(newUser)
+            .expect(400)
+    })
+
+    test("password length <= 3", async () => {
+        const newUser = {
+            username: "test3",
+            name: "test3",
+            password: "tes"
+        }
+
+        await api.post("/api/users")
+            .send(newUser)
+            .expect(400)
+    })
 })
 
 
