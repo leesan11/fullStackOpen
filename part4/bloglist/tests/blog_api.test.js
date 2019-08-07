@@ -9,7 +9,11 @@ const helper = require('./test_helper')
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    await Promise.all(helper.initialBlogs.map(blog => new Blog(blog))
+    // get id of first user
+    const users = await User.find({})
+    const user = users[0]._id
+    // ====
+    await Promise.all(helper.initialBlogs.map(blog => new Blog({...blog, user}))
         .map(async blog => await blog.save()))
 })
 
