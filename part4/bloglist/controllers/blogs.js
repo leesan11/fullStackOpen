@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blogs')
 const User = require('../models/users')
+const jwt = require('jsonwebtoken')
 
 blogsRouter.get("/", async (request, response) => {
 
@@ -31,15 +32,23 @@ blogsRouter.delete("/:id", async (request, response, next) => {
 blogsRouter.post("/", async (request, response, next) => {
     let temp = request.body
     // assign any user
-    const users = await User.find({})
-    const user = users[0]
-    console.log(user)
-    temp = {...temp, user:user._id}
+    // const users = await User.find({})
+    // const user = users[0]
+    // console.log(user)
+    // temp = {...temp, user:user._id}
     // ===
     if (!temp.likes) {
         temp = { ...temp, likes: 0 }
     }
+    const token = request.token
     try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if(!token || !decodedToken.id){
+            return response.status(401).json({error:"token missing or invalid"})
+        }
+        const user = await User.findById(decodedToken.id)
+        temp = {...temp, user}
+
         const newBlog = new Blog(temp)
         const savedBlog = await newBlog.save()
         user.blogs = user.blogs.concat(savedBlog._id)
