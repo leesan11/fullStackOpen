@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
@@ -28,6 +29,29 @@ test("check for id property", async () => {
     blogs.forEach(blog=>{
         expect(blog.id).toBeDefined()
     })
+})
+
+test("check for deletion", async () => {
+    const blogs = await helper.blogsInDb()
+    const id = blogs[0].id
+    const response = await api.delete(`/api/blogs/${id}`)
+    .expect(204)
+    const newBlogs = await helper.blogsInDb()
+    
+    expect(newBlogs.length).toEqual(blogs.length-1)
+})
+
+test("check for like changes", async () => {
+    const likes = {likes:100}
+    const blogs = await helper.blogsInDb()
+    const id = blogs[0].id
+    const response = await api.put(`/api/blogs/${id}`).send(likes)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+    const newBlogs = await helper.blogsInDb()
+    expect(newBlogs[0].likes).toBe(100)
+
 })
 
 test("bad request on post", async () => {
