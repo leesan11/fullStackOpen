@@ -5,12 +5,12 @@ const Blog = ({ blog, setAlert, user }) => {
   const [showInfo, setShowInfo] = useState(false)
   const [showDel, setShowDel] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-      const response = await blogService.getBlog({id:blog.id})
-      if(response.user === user.uid.toString() ){
+      const response = await blogService.getBlog({ id: blog.id })
+      if (response.user === user.uid.toString()) {
         setShowDel(true)
-      }else{
+      } else {
         setShowDel(false)
       }
     }
@@ -20,10 +20,10 @@ const Blog = ({ blog, setAlert, user }) => {
   const handleLike = async () => {
     try {
       const response = await blogService.updateBlog({ id: blog.id, likes: blog.likes + 1 })
-      setAlert({message:`${response.title} Liked!`, error:false})
-      setTimeout(()=>{
-        setAlert({message:'',error:false})
-      },3000)
+      setAlert({ message: `${response.title} Liked!`, error: false })
+      setTimeout(() => {
+        setAlert({ message: '', error: false })
+      }, 3000)
     } catch (error) {
       console.log(error)
     }
@@ -31,26 +31,26 @@ const Blog = ({ blog, setAlert, user }) => {
 
   const handleDelete = async () => {
     const confirm = window.confirm(`remove Blog ${blog.title} ${blog.author}`)
-    if(confirm){
-    try{
-      await blogService.deleteBlog({id:blog.id})
-      setAlert({message:`Deleted!`, error:false})
-      setTimeout(()=>{
-        setAlert({message:'',error:false})
-      },3000)
-    }catch(error){
-      console.log(error)
+    if (confirm) {
+      try {
+        await blogService.deleteBlog({ id: blog.id })
+        setAlert({ message: 'Deleted!', error: false })
+        setTimeout(() => {
+          setAlert({ message: '', error: false })
+        }, 3000)
+      } catch (error) {
+        console.log(error)
+      }
     }
-  }
   }
 
   return (
-    <div style={{ border: "2px solid black" }}>
+    <div style={{ border: '2px solid black' }}>
       <h5 onClick={() => setShowInfo(!showInfo)}>Title: {blog.title} <i>Author: {blog.author}</i></h5>
       <div style={{ display: `${showInfo ? 'block' : 'none'}` }}>
         <p>Url: {blog.url} </p>
         <p>Likes: {blog.likes} <button onClick={() => handleLike()}>like</button></p>
-        {showDel?(<button onClick={()=>handleDelete()}>delete</button>):""}
+        {showDel ? (<button onClick={() => handleDelete()}>delete</button>) : ''}
       </div>
     </div>
   )
