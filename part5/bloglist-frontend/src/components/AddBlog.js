@@ -9,16 +9,16 @@ const AddBlog = ({setAlert}) => {
     const handleSubmit=async (e) =>{
         e.preventDefault()
         try{
-            await blogService.addBlog(addBlog)
-            setAlert("Blog Added")
+            const response = await blogService.addBlog(addBlog)
+            setAlert({message:`Blog Added ${response.title} by ${response.author}`, error:false})
             setTimeout(()=>{
-                setAlert("")
+                setAlert({message:"", error:false})
             },3000)
         }catch(error){
             console.log(error)
-            setAlert(`Unable to add. Missing Fields`)
+            setAlert({message:`Unable to add. Missing Fields`, error:true})
             setTimeout(()=>{
-                setAlert("")
+                setAlert({message:"", error:false})
             },3000)
         }
     }

@@ -8,12 +8,11 @@ import AddBlog from './components/AddBlog'
 
 function App() {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
-  const [alert, setAlert] = useState('')
-  const cred = {setUsername, setPassword, password, username, loggedIn, setLoggedIn, setAlert, setUser}
+  const [alert, setAlert] = useState({})
+  const cred = {loggedIn, setLoggedIn, setAlert, setUser}
   useEffect(() => {
     const fetchData = async () => {
       const allBlogs = await blogService.getAll()
@@ -36,9 +35,9 @@ function App() {
   const handleLogout = () => {
     setLoggedIn(false)
     localStorage.clear()
-    setAlert("Logged Out")
+    setAlert({message:"Logged Out", error:false})
     setTimeout(()=>{
-      setAlert('')
+      setAlert({message:"", error:false})
     },3000)
     setUser({})
   }
