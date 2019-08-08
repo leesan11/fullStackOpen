@@ -1,5 +1,6 @@
 import React from 'react'
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 const Login = ({cred}) => {
 
@@ -12,6 +13,7 @@ const Login = ({cred}) => {
             window.localStorage.setItem("loggedBlogUser", JSON.stringify(response))
             cred.setLoggedIn(true)
             cred.setAlert("Logged In")
+            blogService.setToken(token)
             cred.setUser(response)
             setTimeout(()=>{
                 cred.setAlert("")

@@ -4,6 +4,7 @@ import blogService from './services/blogs'
 import Blog from './components/Blog'
 import Login from './components/Login'
 import Alert from './components/Alert'
+import AddBlog from './components/AddBlog'
 
 function App() {
   const [blogs, setBlogs] = useState([])
@@ -19,14 +20,16 @@ function App() {
       setBlogs(allBlogs)
     }
     fetchData()
-  },[])
+  },[alert])
 
   useEffect(()=>{
     // check for token
     const currentUser = localStorage.getItem("loggedBlogUser")
     if(currentUser){
+      const currentUserParsed = JSON.parse(currentUser)
       setLoggedIn(true)
-      setUser(JSON.parse(currentUser))
+      blogService.setToken(currentUserParsed.token)
+      setUser(currentUserParsed)
     }
   },[])
 
@@ -43,8 +46,8 @@ function App() {
 
   return (<>
     <Alert alert={alert}/>
-    {loggedIn?<><h3>{user.username} is logged in</h3><button onClick={handleLogout}>Logout</button></>:<Login cred={cred}/>}
-    {loggedIn?blogs.map(blog=><Blog blog={blog}/>):""}
+    {loggedIn?<><h3>{user.username} is logged in</h3><button onClick={handleLogout}>Logout</button><br/><AddBlog setAlert={setAlert}/></>:<Login cred={cred}/>}
+    {loggedIn?blogs.map(blog=><Blog key={blog.id} blog={blog}/>):""}
     </>
   );
 }
