@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Alert= ({alert}) => {
     if (alert.message){
@@ -16,5 +17,9 @@ const Alert= ({alert}) => {
     }else{
         return (<></>)
     }
+}
+
+Alert.propTypes = {
+    alert:PropTypes.object.isRequired
 }
 export default Alert
