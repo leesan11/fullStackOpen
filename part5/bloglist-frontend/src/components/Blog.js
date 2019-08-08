@@ -14,6 +14,21 @@ const Blog = ({ blog, setAlert }) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleDelete = async () => {
+    const confirm = window.confirm(`remove Blog ${blog.title} ${blog.author}`)
+    if(confirm){
+    try{
+      await blogService.deleteBlog({id:blog.id})
+      setAlert({message:`Deleted!`, error:false})
+      setTimeout(()=>{
+        setAlert({message:'',error:false})
+      },3000)
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   }
 
@@ -23,6 +38,7 @@ const Blog = ({ blog, setAlert }) => {
       <div style={{ display: `${showInfo ? 'block' : 'none'}` }}>
         <p>Url: {blog.url} </p>
         <p>Likes: {blog.likes} <button onClick={() => handleLike()}>like</button></p>
+        <button onClick={()=>handleDelete()}>delete</button>
       </div>
     </div>
   )
