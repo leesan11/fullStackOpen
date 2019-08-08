@@ -15,7 +15,7 @@ const Blog = ({ blog, setAlert, user }) => {
       }
     }
     fetchData()
-  },[])
+  })
 
   const handleLike = async () => {
     try {

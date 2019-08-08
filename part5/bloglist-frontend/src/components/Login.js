@@ -39,7 +39,7 @@ const Login = ({cred}) => {
             <input type="text" onChange={(e) => setUsername(e.target.value)}/>
             <br />
             <label>Password</label>
-            <input type="password" onChange={(e)=> setPassword(e.target.value)}/>
+            <input type="password" autoComplete="true" onChange={(e)=> setPassword(e.target.value)}/>
             <br />
             <button type="submit" onClick={handleSubmit}>login</button>
         </form>
