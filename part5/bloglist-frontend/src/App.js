@@ -8,7 +8,6 @@ import AddBlog from './components/AddBlog'
 
 function App() {
   const [blogs, setBlogs] = useState([])
-
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
   const [alert, setAlert] = useState({})
@@ -45,7 +44,7 @@ function App() {
 
   return (<>
     <Alert alert={alert}/>
-    {loggedIn?<><h3>{user.username} is logged in</h3><button onClick={handleLogout}>Logout</button><br/><AddBlog setAlert={setAlert}/></>:<Login cred={cred}/>}
+    {loggedIn?<><h3>{user.username} is logged in</h3><button onClick={handleLogout}>Logout</button><hr/><AddBlog setAlert={setAlert}/></>:<Login cred={cred}/>}
     {loggedIn?blogs.map(blog=><Blog key={blog.id} blog={blog}/>):""}
     </>
   );

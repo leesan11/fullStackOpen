@@ -5,6 +5,7 @@ import blogService from '../services/blogs'
 const AddBlog = ({setAlert}) => {
 
     const [addBlog, setAddBlog] = useState({})
+    const [visible, setVisible] = useState('none')
 
     const handleSubmit=async (e) =>{
         e.preventDefault()
@@ -28,9 +29,9 @@ const AddBlog = ({setAlert}) => {
         setAddBlog(newBlog)
     }
 
-
     return (
-        <form>
+        <>   
+        <form style={{display:`${visible}`}}>
             <label>Title</label>
             <input type="text" onChange={(e)=>onChangeProp("title",e)}/>
             <br/>
@@ -42,6 +43,8 @@ const AddBlog = ({setAlert}) => {
             <br/>
             <button type="submit" onClick={(e)=>handleSubmit(e)}>Add Blog</button>
         </form>
+        <button onClick={()=>setVisible(visible === 'none' ? 'block': 'none')}>{visible === 'none'?'new Blog':'cancel'}</button>
+        </>
     )
 
 }
