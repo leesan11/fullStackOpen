@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import blogService from '../services/blogs'
-const Blog = ({ blog, setAlert }) => {
+const Blog = ({ blog, setAlert, user }) => {
 
   const [showInfo, setShowInfo] = useState(false)
+  const [showDel, setShowDel] = useState(false)
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      const response = await blogService.getBlog({id:blog.id})
+      if(response.user === user.uid.toString() ){
+        setShowDel(true)
+      }else{
+        setShowDel(false)
+      }
+    }
+    fetchData()
+  },[])
 
   const handleLike = async () => {
     try {
@@ -29,7 +42,6 @@ const Blog = ({ blog, setAlert }) => {
       console.log(error)
     }
   }
-
   }
 
   return (
@@ -38,7 +50,7 @@ const Blog = ({ blog, setAlert }) => {
       <div style={{ display: `${showInfo ? 'block' : 'none'}` }}>
         <p>Url: {blog.url} </p>
         <p>Likes: {blog.likes} <button onClick={() => handleLike()}>like</button></p>
-        <button onClick={()=>handleDelete()}>delete</button>
+        {showDel?(<button onClick={()=>handleDelete()}>delete</button>):""}
       </div>
     </div>
   )

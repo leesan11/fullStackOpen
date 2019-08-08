@@ -45,7 +45,7 @@ function App() {
   return (<>
     <Alert alert={alert}/>
     {loggedIn?<><h3>{user.username} is logged in</h3><button onClick={handleLogout}>Logout</button><hr/><AddBlog setAlert={setAlert}/></>:<Login cred={cred}/>}
-    {loggedIn?blogs.sort((b,a)=>a.likes-b.likes).map((blog=><Blog key={blog.id} setAlert={setAlert} blog={blog}/>)):""}
+    {Object.keys(user).length > 0?blogs.sort((b,a)=>a.likes-b.likes).map((blog=><Blog key={blog.id} setAlert={setAlert} user={user} blog={blog}/>)):""}
     </>
   );
 }

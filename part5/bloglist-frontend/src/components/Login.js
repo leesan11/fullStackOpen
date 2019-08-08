@@ -16,8 +16,9 @@ const Login = ({cred}) => {
             window.localStorage.setItem("loggedBlogUser", JSON.stringify(response))
             cred.setLoggedIn(true)
             cred.setAlert({message:"Logged In",error:false})
-            blogService.setToken(token)
             cred.setUser(response)
+            blogService.setToken(token)
+            
             setTimeout(()=>{
                 cred.setAlert({message:"",error:false})
             },3000)
