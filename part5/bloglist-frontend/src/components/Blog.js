@@ -46,8 +46,8 @@ const Blog = ({ blog, setAlert, user }) => {
 
   return (
     <div style={{ border: '2px solid black' }}>
-      <h5 onClick={() => setShowInfo(!showInfo)}>Title: {blog.title} <i>Author: {blog.author}</i></h5>
-      <div style={{ display: `${showInfo ? 'block' : 'none'}` }}>
+      <h5 className='show-info' onClick={() => setShowInfo(!showInfo)}>Title: {blog.title} <i>Author: {blog.author}</i></h5>
+      <div className='more-info' style={{ display: `${showInfo ? 'block' : 'none'}` }}>
         <p>Url: {blog.url} </p>
         <p>Likes: {blog.likes} <button onClick={() => handleLike()}>like</button></p>
         {showDel ? (<button onClick={() => handleDelete()}>delete</button>) : ''}
