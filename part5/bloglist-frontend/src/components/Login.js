@@ -34,7 +34,7 @@ const Login = ({ cred }) => {
   }
 
   return (
-    <form>
+    <form className='login-form'>
       <label>Username</label>
       <input type="text" onChange={(e) => setUsername(e.target.value)} />
       <br />
