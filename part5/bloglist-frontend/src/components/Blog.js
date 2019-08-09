@@ -15,7 +15,9 @@ const Blog = ({ blog, setAlert, user }) => {
         setShowDel(false)
       }
     }
-    fetchData()
+    if(localStorage.getItem('loggedBlogUser')){
+      fetchData()
+    }
   })
 
   const handleLike = async () => {

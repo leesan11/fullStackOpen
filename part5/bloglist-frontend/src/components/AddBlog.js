@@ -4,6 +4,7 @@ import blogService from '../services/blogs'
 import  { useField } from '../hooks/index'
 const AddBlog = ({ setAlert }) => {
 
+
   const title = useField('title')
   const author = useField('author')
   const url = useField('url')
@@ -14,15 +15,15 @@ const AddBlog = ({ setAlert }) => {
     e.preventDefault()
     try {
       const addBlog = {
-        title:title.value,
-        author:author.value,
-        url:url.value
+        title:title.fields.value,
+        author:author.fields.value,
+        url:url.fields.value
       }
       const response = await blogService.addBlog(addBlog)
       setAlert({ message: `Blog Added ${response.title} by ${response.author}`, error: false })
-      title.clearField()
-      author.clearField()
-      url.clearField()
+      title.reset()
+      author.reset()
+      url.reset()
       setTimeout(() => {
         setAlert({ message: '', error: false })
       }, 3000)
@@ -40,13 +41,13 @@ const AddBlog = ({ setAlert }) => {
         <>
             <form style={{ display: `${visible}` }}>
               <label>Title</label>
-              <input {...title} />
+              <input {...title.fields} />
               <br />
               <label>Author</label>
-              <input {...author} />
+              <input {...author.fields} />
               <br />
               <label>Url</label>
-              <input {...url} />
+              <input {...url.fields} />
               <br />
               <button type="submit" onClick={(e) => handleSubmit(e)}>Add Blog</button>
             </form>

@@ -10,7 +10,7 @@ const Login = ({ cred }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await loginService.login({ username: username.value, password: password.value })
+      const response = await loginService.login({ username: username.fields.value, password: password.fields.value })
       const token = response.token
       if (token) {
         window.localStorage.setItem('loggedBlogUser', JSON.stringify(response))
@@ -18,9 +18,8 @@ const Login = ({ cred }) => {
         cred.setAlert({ message: 'Logged In', error: false })
         cred.setUser(response)
         blogService.setToken(token)
-        username.clearField()
-        password.clearField()
-
+        username.reset()
+        password.reset()
         setTimeout(() => {
           cred.setAlert({ message: '', error: false })
         }, 3000)
@@ -38,10 +37,10 @@ const Login = ({ cred }) => {
   return (
     <form className='login-form'>
       <label>Username</label>
-      <input type="text" {...username} />
+      <input type="text" {...username.fields} />
       <br />
       <label>Password</label>
-      <input type="password" autoComplete="true" {...password} />
+      <input type="password" autoComplete="true" {...password.fields} />
       <br />
       <button type="submit" onClick={handleSubmit}>login</button>
     </form>
