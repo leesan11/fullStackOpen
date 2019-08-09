@@ -1,17 +1,28 @@
 import React from 'react'
 import { useState } from 'react'
 import blogService from '../services/blogs'
-
+import  { useField } from '../hooks/index'
 const AddBlog = ({ setAlert }) => {
 
-  const [addBlog, setAddBlog] = useState({})
+  const title = useField('title')
+  const author = useField('author')
+  const url = useField('url')
+
   const [visible, setVisible] = useState('none')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      const addBlog = {
+        title:title.value,
+        author:author.value,
+        url:url.value
+      }
       const response = await blogService.addBlog(addBlog)
       setAlert({ message: `Blog Added ${response.title} by ${response.author}`, error: false })
+      title.clearField()
+      author.clearField()
+      url.clearField()
       setTimeout(() => {
         setAlert({ message: '', error: false })
       }, 3000)
@@ -23,23 +34,19 @@ const AddBlog = ({ setAlert }) => {
       }, 3000)
     }
   }
-  const onChangeProp = (type, e) => {
-    let newBlog = addBlog
-    newBlog[type] = e.target.value
-    setAddBlog(newBlog)
-  }
+
 
   return (
         <>
             <form style={{ display: `${visible}` }}>
               <label>Title</label>
-              <input type="text" onChange={(e) => onChangeProp('title', e)} />
+              <input {...title} />
               <br />
               <label>Author</label>
-              <input type="text" onChange={(e) => onChangeProp('author', e)} />
+              <input {...author} />
               <br />
               <label>Url</label>
-              <input type="text" onChange={(e) => onChangeProp('url', e)} />
+              <input {...url} />
               <br />
               <button type="submit" onClick={(e) => handleSubmit(e)}>Add Blog</button>
             </form>

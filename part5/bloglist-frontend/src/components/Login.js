@@ -18,6 +18,8 @@ const Login = ({ cred }) => {
         cred.setAlert({ message: 'Logged In', error: false })
         cred.setUser(response)
         blogService.setToken(token)
+        username.clearField()
+        password.clearField()
 
         setTimeout(() => {
           cred.setAlert({ message: '', error: false })

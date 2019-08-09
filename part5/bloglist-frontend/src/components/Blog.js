@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import blogService from '../services/blogs'
-const Blog = ({ blog, setAlert, user }) => {
 
+const Blog = ({ blog, setAlert, user }) => {
   const [showInfo, setShowInfo] = useState(false)
   const [showDel, setShowDel] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await blogService.getBlog({ id: blog.id })
-      console.log(response)
+      
       if (response.user === JSON.parse(localStorage.getItem('loggedBlogUser')).uid || response.user === user.uid.toString() ) {
         setShowDel(true)
       } else {
