@@ -37,5 +37,9 @@ const blogs = [
 const getAll = () => {
   return Promise.resolve(blogs)
 }
+
+const getBlog = (id) => {
+    return {user:1}
+}
   
-export default { getAll }
+export default { getAll, getBlog }

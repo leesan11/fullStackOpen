@@ -8,7 +8,7 @@ const Blog = ({ blog, setAlert, user }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await blogService.getBlog({ id: blog.id })
-      if (response.user === user.uid.toString()) {
+      if (response.user === JSON.parse(localStorage.getItem('loggedBlogUser')).uid || response.user === user.uid.toString() ) {
         setShowDel(true)
       } else {
         setShowDel(false)
