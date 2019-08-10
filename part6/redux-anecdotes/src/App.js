@@ -1,4 +1,5 @@
 import React from 'react';
+import { create } from 'istanbul-reports';
 
 const App = (props) => {
   const anecdotes = props.store.getState()
@@ -7,6 +8,15 @@ const App = (props) => {
     store.dispatch({
       type:'VOTE',
       id: id
+    })
+  }
+
+  const create = (event) => {
+    event.preventDefault()
+    const anecdote = event.target.anecdote.value
+    store.dispatch({
+      type: 'CREATE',
+      content: anecdote
     })
   }
 
@@ -25,9 +35,9 @@ const App = (props) => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
-        <button>create</button>
+      <form onSubmit={create}>
+        <div><input type='text' name='anecdote' /></div>
+        <button type='submit' >create</button>
       </form>
     </div>
   )

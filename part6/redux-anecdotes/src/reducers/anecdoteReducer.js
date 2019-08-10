@@ -27,7 +27,13 @@ const reducer = (state = initialState, action) => {
     case 'VOTE':
       const newState = state.map(obj => obj.id===action.id ? {...obj, votes: obj.votes+1}: obj)
       return newState
-
+    case 'CREATE':
+      const newAnecdote ={
+        content: action.content,
+        id: getId(),
+        votes: 0
+      }
+      return [...state, newAnecdote]
   }
   return state
 }
