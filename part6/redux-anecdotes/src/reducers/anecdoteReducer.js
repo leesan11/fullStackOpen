@@ -1,3 +1,22 @@
+export const incrementVotes = (id) => {
+  return {
+    type:'VOTE',
+    id: id
+  }
+}
+
+export const createAnecdote = (anecdote) => {
+  return {
+    type: 'CREATE',
+    newAnecdote: {
+      anecdote: anecdote,
+      id: getId(),
+      votes: 0
+    }
+  }
+}
+
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -28,12 +47,8 @@ const reducer = (state = initialState, action) => {
       const newState = state.map(obj => obj.id===action.id ? {...obj, votes: obj.votes+1}: obj)
       return newState
     case 'CREATE':
-      const newAnecdote ={
-        content: action.content,
-        id: getId(),
-        votes: 0
-      }
-      return [...state, newAnecdote]
+      
+      return [...state, action.newAnecdote]
   }
   return state
 }
