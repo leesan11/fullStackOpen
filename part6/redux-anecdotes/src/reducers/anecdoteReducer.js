@@ -9,13 +9,12 @@ export const createAnecdote = (anecdote) => {
   return {
     type: 'CREATE',
     newAnecdote: {
-      anecdote: anecdote,
+      content: anecdote,
       id: getId(),
       votes: 0
     }
   }
 }
-
 
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -47,7 +46,6 @@ const reducer = (state = initialState, action) => {
       const newState = state.map(obj => obj.id===action.id ? {...obj, votes: obj.votes+1}: obj)
       return newState
     case 'CREATE':
-      
       return [...state, action.newAnecdote]
   }
   return state
