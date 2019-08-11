@@ -5,6 +5,13 @@ export const notify = (content) =>{
     }
 }
 
+export const closeNotify = () => {
+  return {
+    type: 'HIDE',
+    content: ''
+  }
+}
+
 const notificationReducer = (state = {content:'',visible:false}, action) => {
     console.log('state now: ', state)
     console.log('action', action)

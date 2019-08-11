@@ -7,12 +7,12 @@ const App = (props) => {
   
   return (
     <div>
-      <Notification store={props.store}/>
-      <Filter store={props.store}/>
+      <Notification />
+      <Filter />
       <h2>Anecdotes</h2>
-      <AnecdoteList store={props.store}/>
+      <AnecdoteList />
       <h2>create new</h2>
-      <AnecdoteForm store={props.store}/>
+      <AnecdoteForm />
     </div>
   )
 }
