@@ -10,8 +10,8 @@ const AnecdoteList = (props) => {
         props.incrementVotes(id)
         props.notify(content)
       }
-      
-    return (<>{(props.anecdote.sort((b, a)=>a.votes-b.votes)).filter(a=>(a.content).indexOf(props.filter) !==-1 && props.filter !=='' ).map(anec => 
+
+    return (<>{props.visibleAnecdotes.map(anec => 
             (<div key={anec.id}>
               <div>
                 {anec.content}
@@ -24,11 +24,12 @@ const AnecdoteList = (props) => {
           )}</>)
     
 }
-
+const anecdotesToShow = ({anecdote, filter}) => {
+  return anecdote.sort((b, a)=>a.votes-b.votes).filter(a=>(a.content).indexOf(filter) !==-1 && filter !=='') 
+}
 const mapStateToProps = (state) => {
   return {
-    anecdote: state.anecdote,
-    filter: state.filter
+    visibleAnecdotes : anecdotesToShow(state)
   }
 }
 
