@@ -25,7 +25,7 @@ const AnecdoteList = (props) => {
     
 }
 const anecdotesToShow = ({anecdote, filter}) => {
-  return anecdote.sort((b, a)=>a.votes-b.votes).filter(a=>(a.content).indexOf(filter) !==-1 && filter !=='') 
+  return anecdote.sort((b, a)=>a.votes-b.votes).filter(anec=>(anec.content).indexOf(filter) !==-1 && filter !=='') 
 }
 const mapStateToProps = (state) => {
   return {

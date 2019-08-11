@@ -7,15 +7,18 @@ export const incrementVotes = (id) => {
   }
 }
 
-export const createAnecdote = (anecdote) => {
-  return {
+export const createAnecdote = (content) => {
+  return async dispatch=>{
+    const anecdote = await anecdoteService.createNew({content, votes: 0})
+    dispatch({
     type: 'CREATE',
     newAnecdote: {
-      content: anecdote,
+      content: anecdote.content,
       // id: getId(),
       votes: 0
     }
-  }
+  })
+}
 }
 
 export const initAnecdotes = () => {
