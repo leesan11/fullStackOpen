@@ -1,21 +1,25 @@
 /* eslint-disable no-unreachable */
 import React from 'react'
 import {incrementVotes} from '../reducers/anecdoteReducer'
+import {notify} from '../reducers/notificationReducer'
 
 const AnecdoteList = ({store}) => {
-    const anecdotes = store.getState()
-    const vote = (id) => {
+    const {anecdote, filter} = store.getState()
+    const vote = (id, content) => {
         store.dispatch(incrementVotes(id))
+        store.dispatch(notify(content))
       }
+      
+    
 
-    return (<>{(anecdotes.sort((b, a)=>a.votes-b.votes)).map(anecdote =>
-            (<div key={anecdote.id}>
+    return (<>{(anecdote.sort((b, a)=>a.votes-b.votes)).filter(a=>(a.content).indexOf(filter) !==-1 && filter !=='' ).map(anec => 
+            (<div key={anec.id}>
               <div>
-                {anecdote.content}
+                {anec.content}
               </div>
               <div>
-                has {anecdote.votes}
-                <button onClick={() => vote(anecdote.id)}>vote</button>
+                has {anec.votes}
+                <button onClick={() => vote(anec.id, anec.content)}>vote</button>
               </div>
             </div>)
           )}</>)
