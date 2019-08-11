@@ -11,8 +11,8 @@ const AnecdoteList = (props) => {
         props.notify(content)
       }
 
-    return (<>{props.visibleAnecdotes.map(anec => 
-            (<div key={anec.id}>
+    return (props.visibleAnecdotes.map(anec => 
+            <div key={anec.id}>
               <div>
                 {anec.content}
               </div>
@@ -20,8 +20,8 @@ const AnecdoteList = (props) => {
                 has {anec.votes}
                 <button onClick={() => vote(anec.id, anec.content)}>vote</button>
               </div>
-            </div>)
-          )}</>)
+            </div>
+          ))
     
 }
 const anecdotesToShow = ({anecdote, filter}) => {

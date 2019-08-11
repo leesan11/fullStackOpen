@@ -1,7 +1,7 @@
 export const notify = (content) =>{
     return {
         type: 'SHOW',
-        content: `you voted for ${content}`
+        content: `${content}`
     }
 }
 

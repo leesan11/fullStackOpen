@@ -10,9 +10,16 @@ export const createAnecdote = (anecdote) => {
     type: 'CREATE',
     newAnecdote: {
       content: anecdote,
-      id: getId(),
+      // id: getId(),
       votes: 0
     }
+  }
+}
+
+export const initAnecdotes = (anecdotes) => {
+  return {
+    type: 'INIT',
+    data: anecdotes
   }
 }
 
@@ -47,6 +54,8 @@ const anecdoteReducer = (state = initialState, action) => {
       return newState
     case 'CREATE':
       return [...state, action.newAnecdote]
+    case 'INIT':
+      return action.data
   }
   return state
 }
