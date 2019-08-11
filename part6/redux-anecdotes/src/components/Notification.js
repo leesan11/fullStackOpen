@@ -1,5 +1,4 @@
 import React from 'react'
-import { closeNotify } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
 const Notification = (props) => {
@@ -9,17 +8,9 @@ const Notification = (props) => {
     padding: 10,
     borderWidth: 1
   }
+  console.log(props.notification)
   
-  if(!props.notification.visible){
-    style = {...style, display:'none'}
-  }else{
-    style = {...style, display:'block'}
-    setTimeout(()=>{
-      props.closeNotify()
-    },3000)
-  }
-
-  return <div style={style}>{props.notification.content}</div>
+  return props.notification.content?<div style={style}>{props.notification.content}</div>:''
 }
 
 const mapStateToProps = (state) =>{
@@ -28,10 +19,8 @@ const mapStateToProps = (state) =>{
   }
 }
 
-const mapDispatchToProps = {
-  closeNotify
-}
 
-const connectedNotification = connect(mapStateToProps, mapDispatchToProps)(Notification)
+
+const connectedNotification = connect(mapStateToProps)(Notification)
 
 export default connectedNotification

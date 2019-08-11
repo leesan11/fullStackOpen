@@ -1,14 +1,15 @@
-export const notify = (content) =>{
-    return {
-        type: 'SHOW',
-        content: `${content}`
-    }
-}
-
-export const closeNotify = () => {
-  return {
-    type: 'HIDE',
-    content: ''
+export const setNotification = (content, time) => {
+  return async dispatch => {
+    dispatch({
+      type:'SHOW',
+      content: content
+    })
+    await setTimeout(()=>{
+      dispatch({
+        type:'HIDE',
+        content: ''
+      })
+    },time*1000)
   }
 }
 
