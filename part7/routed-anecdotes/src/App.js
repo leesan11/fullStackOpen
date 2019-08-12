@@ -4,7 +4,7 @@ import {
   Route, Link, Redirect, withRouter
 } from 'react-router-dom'
 
-const Menu = ({anecdotes, addNew}) => {
+const Menu = ({anecdotes, addNew, notification, setNotification}) => {
   const padding = {
     paddingRight: 5
   }
@@ -22,8 +22,8 @@ const Menu = ({anecdotes, addNew}) => {
             <Link style={padding} to="/about">about</Link>
           </div>
           <div>
-          <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} />} />
-          <Route path="/create" render={() => <CreateNew addNew={addNew} />} />
+          <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} notification={notification} />} />
+          <Route path="/create" render={() => <CreateNew addNew={addNew} setNotification={setNotification} />} />
           <Route path="/about" render={() => <About />} />
           <Route exact path="/anecdotes/:id" render={({ match }) =>
           <Anecdote anecdote={anecdoteById(match.params.id)} />
@@ -45,11 +45,12 @@ const Anecdote = ( {anecdote} ) =>(
   </div>)
 
 
-const AnecdoteList = ( { anecdotes } ) => {
+const AnecdoteList = ( { anecdotes, notification } ) => {
   
   return (
   <div>
     <h2>Anecdotes</h2>
+    {notification?<span style={{border:'2px solid red'}}>{notification}</span>:''}
     <ul>
       {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
     </ul>
@@ -78,7 +79,7 @@ const Footer = () => (
   </div>
 )
 
-const CreateNew = (props) => {
+let CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
@@ -92,6 +93,11 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    props.history.push('/')
+    props.setNotification(`${content} has been created!`)
+    setTimeout(()=>{
+      props.setNotification('')
+    },10000)
   }
 
   return (
@@ -116,6 +122,7 @@ const CreateNew = (props) => {
   )
 
 }
+CreateNew = withRouter(CreateNew)
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -159,7 +166,7 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu anecdotes={anecdotes} addNew={addNew} />
+      <Menu anecdotes={anecdotes} addNew={addNew} notification={notification} setNotification={setNotification} />
       
       <Footer />
     </div>
