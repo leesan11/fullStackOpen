@@ -8,6 +8,10 @@ const Menu = ({anecdotes, addNew}) => {
   const padding = {
     paddingRight: 5
   }
+
+  const anecdoteById = (id) =>  anecdotes.find(anec=> anec.id === id.toString())
+  
+
   return (
     <div>
       <Router>
@@ -21,6 +25,9 @@ const Menu = ({anecdotes, addNew}) => {
           <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} />} />
           <Route path="/create" render={() => <CreateNew addNew={addNew} />} />
           <Route path="/about" render={() => <About />} />
+          <Route exact path="/anecdotes/:id" render={({ match }) =>
+          <Anecdote anecdote={anecdoteById(match.params.id)} />
+    } />
           </div>
         </div>
       </Router>
@@ -29,13 +36,22 @@ const Menu = ({anecdotes, addNew}) => {
   )
 }
 
+const Anecdote = ( {anecdote} ) =>( 
+  <div>
+    <h1>{anecdote.content}</h1>
+    <h3>{anecdote.author}</h3>
+    <p>has {anecdote.votes} votes</p>
+    <p>For more information: <a href={anecdote.info}>{anecdote.info}</a></p>
+  </div>)
+
+
 const AnecdoteList = ( { anecdotes } ) => {
   
   return (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
     </ul>
   </div>
 )}
