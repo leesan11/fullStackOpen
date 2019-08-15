@@ -1,0 +1,38 @@
+{
+    "name": "blogList",
+    "version": "0.0.1",
+    "description": "blogList webpack",
+    "scripts": {
+        "build": "webpack --mode=production",
+        "start": "webpack-dev-server --mode=development",
+        "cypress:open": "cypress open",
+        "dev": "concurrently --kill-others \"npm run start\" \"npm run watch --prefix ../../part4/blogList\""
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.5.5",
+        "@babel/polyfill": "^7.4.4",
+        "@babel/preset-env": "^7.5.5",
+        "@babel/preset-react": "^7.0.0",
+        "babel-loader": "^8.0.6",
+        "concurrently": "^4.1.1",
+        "css-loader": "^3.2.0",
+        "cypress": "^3.4.1",
+        "eslint": "^6.1.0",
+        "eslint-plugin-react": "^7.14.3",
+        "style-loader": "^1.0.0",
+        "webpack": "^4.39.1",
+        "webpack-cli": "^3.3.6",
+        "webpack-dev-server": "^3.8.0"
+    },
+    "dependencies": {
+        "axios": "^0.19.0",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "react-redux": "^7.1.0",
+        "react-router-dom": "^5.0.1",
+        "redux": "^4.0.4",
+        "redux-thunk": "^2.3.0",
+        "semantic-ui-react": "^0.87.3"
+    }
+}
