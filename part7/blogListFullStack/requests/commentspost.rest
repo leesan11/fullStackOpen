@@ -1,0 +1,6 @@
+POST http://localhost:3003/api/comments/5d4c377c90871b5c302efe2e HTTP/1.1
+Content-Type: application/json
+
+{
+    "comment": "hello world"
+}
