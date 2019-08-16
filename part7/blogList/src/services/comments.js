@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/api/comments'
+// const baseUrl = 'http://localhost:3003/api/comments'
+const baseUrl = '/api/comments'
 
 const getSpecificComments = async (obj) => {
     // const config = {

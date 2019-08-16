@@ -7,7 +7,6 @@ usersRouter.post("/", async (request,response,next)=>{
     if(request.body.password.length <=3){
         response.status(400).json("password is too short")
     }
-
     try{
         const body = request.body
         const saltRounds = 10
